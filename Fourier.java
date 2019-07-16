@@ -14,6 +14,12 @@ public class Fourier
 		this.input = input;
 	}
 
+	// Fast Fourier Transform
+	public void fft()
+	{
+		// TODO: Implement Recursive FFT
+	}
+
 	// Discrete Fourier Transform
 	public void dft()
 	{
