@@ -51,13 +51,13 @@ public class BeatDetector
 			for (int i = 0; i < m; i++) { odd[i] = input[2 * i + 1]; }
 			even = fft(even).real;
 			odd = fft(odd).real;
-			for (int i = 0; i < m; i++)
+			for (int i = 0; i < m/2; i++)
 			{
 				int theta = (-2 * (int) Math.PI * i) / n;
 				real_out[i] = (byte) (even[i] - (int) Math.cos(theta) * odd[i]);
 				imaginary_out[i] = (byte) (0 - (int) Math.sin(theta) * 0);
 			}
-			for (int i = m; i < n; i++)
+			for (int i = m/2; i < n; i++)
 			{
 				int theta = (-2 * (int) Math.PI * i) / n;
 				real_out[i] = (byte) (even[i] - (int) Math.cos(theta) * odd[i]);
