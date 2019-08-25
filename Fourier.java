@@ -20,8 +20,49 @@ public class Fourier
 	}
 
 	// Fast Fourier Transform
-	public void fft()
+	public static double fft(byte[] input)
 	{
+		int n = input.length;
 		
+		if (n == 1)
+		{
+			return(input);
+		}
+		if (n % 2 != 0)
+		{
+			// Remove the last byte
+			n = n - 1;
+		}
+		
+		double[] converted = new double[n];
+		for (int i = 0; i < n; i++)
+		{
+			converted[i] = ((double) input[i]) / 256.0;
+		}
+		
+		double[] even = new double[n/2];
+		for (int i = 0; i < n/2; i++)
+		{
+			even[i] = converted[2 * i];
+		}
+		double[] even_transformed = fft(even);
+		
+		double[] odd = new double[n/2];
+		for (int i = 0; i < n/2; i++)
+		{
+			odd[i] = converted[2 * i + 1];
+		}
+		double[] odd_transformed = fft(odd);
+		
+		double[] output = new double[n];
+		for (int i = 0; i < n/2; i++)
+		{
+			double mult = 2 * i * Math.PI / n;
+			double real = Math.cos(mult);
+			double imaginary = Math.sin(mult);
+			output[i] = even_transformed + (real * odd_transformed[i] - imaginary * 0);
+			output[i + n / 2] = even_transformed - (real * odd_transformed[i] - imaginary * 0);
+		}
+		return(output);
 	}
 }
